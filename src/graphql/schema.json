@@ -31,7 +31,7 @@
         "name" : "Cert",
         "description" : null,
         "fields" : [ {
-          "name" : "aws_cert_ca",
+          "name" : "thingName",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -42,7 +42,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "aws_cert_private",
+          "name" : "awsCertCa",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -53,7 +53,18 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "aws_cert_crt",
+          "name" : "awsCertPrivate",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "awsCertCrt",
           "description" : null,
           "args" : [ ],
           "type" : {

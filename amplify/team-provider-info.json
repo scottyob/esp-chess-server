@@ -22,5 +22,29 @@
         }
       }
     }
+  },
+  "devtwo": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-espchessserver-devtwo-61608-authRole",
+      "UnauthRoleArn": "arn:aws:iam::989547692388:role/amplify-espchessserver-devtwo-61608-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::989547692388:role/amplify-espchessserver-devtwo-61608-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-espchessserver-devtwo-61608-deployment",
+      "UnauthRoleName": "amplify-espchessserver-devtwo-61608-unauthRole",
+      "StackName": "amplify-espchessserver-devtwo-61608",
+      "StackId": "arn:aws:cloudformation:us-west-2:989547692388:stack/amplify-espchessserver-devtwo-61608/4bc13a70-6f55-11eb-9d8f-06a35f9061a9",
+      "AmplifyAppId": "d3rwxyk20q1igr"
+    },
+    "categories": {
+      "auth": {
+        "espchessserver40781978": {}
+      },
+      "function": {
+        "EspChessSetup": {
+          "deploymentBucketName": "amplify-espchessserver-devtwo-61608-deployment",
+          "s3Key": "amplify-builds/EspChessSetup-69557a626a5461715a77-build.zip"
+        }
+      }
+    }
   }
 }

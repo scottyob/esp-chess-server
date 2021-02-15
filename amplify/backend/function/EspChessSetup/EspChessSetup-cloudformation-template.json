@@ -15,14 +15,6 @@
     },
     "s3Key": {
       "Type": "String"
-    },
-    "storageEspChessUsersName": {
-      "Type": "String",
-      "Default": "storageEspChessUsersName"
-    },
-    "storageEspChessUsersArn": {
-      "Type": "String",
-      "Default": "storageEspChessUsersArn"
     }
   },
   "Conditions": {
@@ -77,12 +69,6 @@
             },
             "REGION": {
               "Ref": "AWS::Region"
-            },
-            "STORAGE_ESPCHESSUSERS_NAME": {
-              "Ref": "storageEspChessUsersName"
-            },
-            "STORAGE_ESPCHESSUSERS_ARN": {
-              "Ref": "storageEspChessUsersArn"
             }
           }
         },
@@ -103,12 +89,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "espchessserverLambdaRolec5780479",
+            "espchessserverLambdaRole3e801866",
             {
               "Fn::Join": [
                 "",
                 [
-                  "espchessserverLambdaRolec5780479",
+                  "espchessserverLambdaRole3e801866",
                   "-",
                   {
                     "Ref": "env"
@@ -178,7 +164,7 @@
             {
               "Effect": "Allow",
               "Action": [
-                "iot:CreateThing"
+                "iot:*"
               ],
               "Resource": {
                 "Fn::Sub": [
@@ -196,58 +182,35 @@
                   }
                 ]
               }
-            }
-          ]
-        }
-      }
-    },
-    "AmplifyResourcesPolicy": {
-      "DependsOn": [
-        "LambdaExecutionRole"
-      ],
-      "Type": "AWS::IAM::Policy",
-      "Properties": {
-        "PolicyName": "amplify-lambda-execution-policy",
-        "Roles": [
-          {
-            "Ref": "LambdaExecutionRole"
-          }
-        ],
-        "PolicyDocument": {
-          "Version": "2012-10-17",
-          "Statement": [
+            },
             {
               "Effect": "Allow",
               "Action": [
-                "dynamodb:Put*",
-                "dynamodb:Create*",
-                "dynamodb:BatchWriteItem",
-                "dynamodb:Get*",
-                "dynamodb:BatchGetItem",
-                "dynamodb:List*",
-                "dynamodb:Describe*",
-                "dynamodb:Scan",
-                "dynamodb:Query",
-                "dynamodb:Update*",
-                "dynamodb:RestoreTable*",
-                "dynamodb:Delete*"
+                "iot:*"
               ],
-              "Resource": [
-                {
-                  "Ref": "storageEspChessUsersArn"
-                },
-                {
-                  "Fn::Join": [
-                    "/",
-                    [
-                      {
-                        "Ref": "storageEspChessUsersArn"
-                      },
-                      "index/*"
-                    ]
-                  ]
-                }
-              ]
+              "Resource": {
+                "Fn::Sub": [
+                  "arn:aws:iot:${region}:${account}:thinggroup/*",
+                  {
+                    "region": {
+                      "Ref": "AWS::Region"
+                    },
+                    "account": {
+                      "Ref": "AWS::AccountId"
+                    },
+                    "lambda": {
+                      "Ref": "LambdaFunction"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "iot:CreateKeysAndCertificate"
+              ],
+              "Resource": "*"
             }
           ]
         }

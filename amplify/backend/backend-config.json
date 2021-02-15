@@ -36,11 +36,5 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
-  },
-  "iot": {
-    "IotAccount": {
-      "service": "Iot",
-      "providerPlugin": "awscloudformation"
-    }
   }
 }

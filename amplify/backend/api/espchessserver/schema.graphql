@@ -1,7 +1,8 @@
 type Cert {
-  aws_cert_ca: String
-  aws_cert_private: String
-  aws_cert_crt: String
+  thingName: String
+  awsCertCa: String
+  awsCertPrivate: String
+  awsCertCrt: String
 }
 
 type Query {

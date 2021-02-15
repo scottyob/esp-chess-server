@@ -4,9 +4,10 @@
 export const setup = /* GraphQL */ `
   query Setup {
     setup {
-      aws_cert_ca
-      aws_cert_private
-      aws_cert_crt
+      thingName
+      awsCertCa
+      awsCertPrivate
+      awsCertCrt
     }
   }
 `;
