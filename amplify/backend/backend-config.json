@@ -34,23 +34,13 @@
     "EspChessSetup": {
       "build": true,
       "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "storage",
-          "resourceName": "EspChessUsers",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        }
-      ]
+      "service": "Lambda"
     }
   },
   "iot": {
     "IotAccount": {
       "service": "Iot",
-      "providerPlugin": "awscloudformation",
+      "providerPlugin": "awscloudformation"
     }
   }
 }

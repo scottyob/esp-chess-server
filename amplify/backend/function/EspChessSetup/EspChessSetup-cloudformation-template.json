@@ -27,7 +27,8 @@
   },
   "Conditions": {
     "ShouldNotCreateEnvResources": {
-      "Fn::Equals": [{
+      "Fn::Equals": [
+        {
           "Ref": "env"
         },
         "NONE"
@@ -57,7 +58,8 @@
             "EspChessSetup",
             {
               "Fn::Join": [
-                "", [
+                "",
+                [
                   "EspChessSetup",
                   "-",
                   {
@@ -104,7 +106,8 @@
             "espchessserverLambdaRolec5780479",
             {
               "Fn::Join": [
-                "", [
+                "",
+                [
                   "espchessserverLambdaRolec5780479",
                   "-",
                   {
@@ -117,17 +120,19 @@
         },
         "AssumeRolePolicyDocument": {
           "Version": "2012-10-17",
-          "Statement": [{
-            "Effect": "Allow",
-            "Principal": {
-              "Service": [
-                "lambda.amazonaws.com"
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
               ]
-            },
-            "Action": [
-              "sts:AssumeRole"
-            ]
-          }]
+            }
+          ]
         }
       }
     },
@@ -138,12 +143,15 @@
       "Type": "AWS::IAM::Policy",
       "Properties": {
         "PolicyName": "lambda-execution-policy",
-        "Roles": [{
-          "Ref": "LambdaExecutionRole"
-        }],
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
         "PolicyDocument": {
           "Version": "2012-10-17",
-          "Statement": [{
+          "Statement": [
+            {
               "Effect": "Allow",
               "Action": [
                 "logs:CreateLogGroup",
@@ -200,41 +208,48 @@
       "Type": "AWS::IAM::Policy",
       "Properties": {
         "PolicyName": "amplify-lambda-execution-policy",
-        "Roles": [{
-          "Ref": "LambdaExecutionRole"
-        }],
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
         "PolicyDocument": {
           "Version": "2012-10-17",
-          "Statement": [{
-            "Effect": "Allow",
-            "Action": [
-              "dynamodb:Put*",
-              "dynamodb:Create*",
-              "dynamodb:BatchWriteItem",
-              "dynamodb:Get*",
-              "dynamodb:BatchGetItem",
-              "dynamodb:List*",
-              "dynamodb:Describe*",
-              "dynamodb:Scan",
-              "dynamodb:Query",
-              "dynamodb:Update*",
-              "dynamodb:RestoreTable*",
-              "dynamodb:Delete*"
-            ],
-            "Resource": [{
-                "Ref": "storageEspChessUsersArn"
-              },
-              {
-                "Fn::Join": [
-                  "/", [{
-                      "Ref": "storageEspChessUsersArn"
-                    },
-                    "index/*"
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:Put*",
+                "dynamodb:Create*",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:Get*",
+                "dynamodb:BatchGetItem",
+                "dynamodb:List*",
+                "dynamodb:Describe*",
+                "dynamodb:Scan",
+                "dynamodb:Query",
+                "dynamodb:Update*",
+                "dynamodb:RestoreTable*",
+                "dynamodb:Delete*"
+              ],
+              "Resource": [
+                {
+                  "Ref": "storageEspChessUsersArn"
+                },
+                {
+                  "Fn::Join": [
+                    "/",
+                    [
+                      {
+                        "Ref": "storageEspChessUsersArn"
+                      },
+                      "index/*"
+                    ]
                   ]
-                ]
-              }
-            ]
-          }]
+                }
+              ]
+            }
+          ]
         }
       }
     }
