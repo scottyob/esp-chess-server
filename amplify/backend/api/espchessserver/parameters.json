@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "espchessserver",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authespchessserver40781978",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+{
+    "tableName": "EspChessUsers",
+    "partitionKeyName": "username",
+    "partitionKeyType": "S"
+}

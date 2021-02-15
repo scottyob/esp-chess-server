@@ -1,0 +1,9 @@
+type Cert {
+  aws_cert_ca: String
+  aws_cert_private: String
+  aws_cert_crt: String
+}
+
+type Query {
+  setup: Cert @function(name: "EspChessSetup-${env}")
+}
