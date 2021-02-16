@@ -208,6 +208,28 @@
             {
               "Effect": "Allow",
               "Action": [
+                "iot:*"
+              ],
+              "Resource": {
+                "Fn::Sub": [
+                  "arn:aws:iot:${region}:${account}:cert/*",
+                  {
+                    "region": {
+                      "Ref": "AWS::Region"
+                    },
+                    "account": {
+                      "Ref": "AWS::AccountId"
+                    },
+                    "lambda": {
+                      "Ref": "LambdaFunction"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
                 "iot:CreateKeysAndCertificate"
               ],
               "Resource": "*"

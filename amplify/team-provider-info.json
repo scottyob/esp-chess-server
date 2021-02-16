@@ -42,7 +42,7 @@
       "function": {
         "EspChessSetup": {
           "deploymentBucketName": "amplify-espchessserver-devtwo-61608-deployment",
-          "s3Key": "amplify-builds/EspChessSetup-69557a626a5461715a77-build.zip"
+          "s3Key": "amplify-builds/EspChessSetup-69724f637a6151695032-build.zip"
         }
       }
     }
