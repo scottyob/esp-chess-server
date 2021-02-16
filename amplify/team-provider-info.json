@@ -42,7 +42,13 @@
       "function": {
         "EspChessSetup": {
           "deploymentBucketName": "amplify-espchessserver-devtwo-61608-deployment",
-          "s3Key": "amplify-builds/EspChessSetup-69724f637a6151695032-build.zip"
+          "s3Key": "amplify-builds/EspChessSetup-76414267424879394e4a-build.zip"
+        }
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d3rwxyk20q1igr",
+          "type": "manual"
         }
       }
     }
