@@ -13,27 +13,27 @@ export const createGame = /* GraphQL */ `
       updatedAt
       blackPlayer {
         id
+        holding
+        createdAt
+        updatedAt
         game {
           id
           fen
           createdAt
           updatedAt
         }
-        holding
-        createdAt
-        updatedAt
       }
       whitePlayer {
         id
+        holding
+        createdAt
+        updatedAt
         game {
           id
           fen
           createdAt
           updatedAt
         }
-        holding
-        createdAt
-        updatedAt
       }
     }
   }
@@ -50,27 +50,27 @@ export const updateGame = /* GraphQL */ `
       updatedAt
       blackPlayer {
         id
+        holding
+        createdAt
+        updatedAt
         game {
           id
           fen
           createdAt
           updatedAt
         }
-        holding
-        createdAt
-        updatedAt
       }
       whitePlayer {
         id
+        holding
+        createdAt
+        updatedAt
         game {
           id
           fen
           createdAt
           updatedAt
         }
-        holding
-        createdAt
-        updatedAt
       }
     }
   }
@@ -87,27 +87,27 @@ export const deleteGame = /* GraphQL */ `
       updatedAt
       blackPlayer {
         id
+        holding
+        createdAt
+        updatedAt
         game {
           id
           fen
           createdAt
           updatedAt
         }
-        holding
-        createdAt
-        updatedAt
       }
       whitePlayer {
         id
+        holding
+        createdAt
+        updatedAt
         game {
           id
           fen
           createdAt
           updatedAt
         }
-        holding
-        createdAt
-        updatedAt
       }
     }
   }
@@ -119,6 +119,9 @@ export const createPlayer = /* GraphQL */ `
   ) {
     createPlayer(input: $input, condition: $condition) {
       id
+      holding
+      createdAt
+      updatedAt
       game {
         id
         fen
@@ -137,9 +140,6 @@ export const createPlayer = /* GraphQL */ `
           updatedAt
         }
       }
-      holding
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -150,6 +150,9 @@ export const updatePlayer = /* GraphQL */ `
   ) {
     updatePlayer(input: $input, condition: $condition) {
       id
+      holding
+      createdAt
+      updatedAt
       game {
         id
         fen
@@ -168,9 +171,6 @@ export const updatePlayer = /* GraphQL */ `
           updatedAt
         }
       }
-      holding
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -181,6 +181,9 @@ export const deletePlayer = /* GraphQL */ `
   ) {
     deletePlayer(input: $input, condition: $condition) {
       id
+      holding
+      createdAt
+      updatedAt
       game {
         id
         fen
@@ -199,9 +202,6 @@ export const deletePlayer = /* GraphQL */ `
           updatedAt
         }
       }
-      holding
-      createdAt
-      updatedAt
     }
   }
 `;

@@ -11,8 +11,11 @@ import {
 from "react-router-dom";
 
 import * as queries from './graphql/queries';
-import { Join } from './components/Join.js';
+import { ListGames } from './components/listGames.js';
+import { GameViewer } from './components/view.js';
 import React, { useEffect, useState } from 'react'
+import { getPlayer } from './graphql/queries';
+import Loader from "react-loader-spinner";
 
 import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify';
 import awsconfig from './aws-exports';
@@ -23,19 +26,61 @@ Amplify.configure(awsconfig);
 
 async function logout(e) {
   await Auth.signOut();
-  //  We could also prevent the redirect if that makes sense
-  // e.preventDefault();
 }
 
+
 function App() {
-  return (<div className="App">
+  const [player, setPlayer] = useState();
+
+  useEffect(() => {
+    Auth.currentUserInfo().then(async user => {
+      var dbPlayer = await API.graphql(graphqlOperation(getPlayer, { id: user.username }));
+      if (!dbPlayer.data.getPlayer) {
+        // Player is not yet setup.  Better set it up.
+        await API.graphql({ query: queries.addUser })
+
+        // Re-Fetch player
+        dbPlayer = await API.graphql(graphqlOperation(getPlayer, { id: user.username }));
+      }
+      setPlayer(dbPlayer.data.getPlayer);
+    });
+
+  }, []);
+
+  console.log("Player:");
+  console.log(player);
+
+  // Show loading
+  if (player == null) {
+    return (<div className="centerContainer">
+      <div className="centered">
+        <Loader type="Grid" />
+      </div>
+    </div>);
+  }
+
+  var content = null;
+  // If not in a game, show the join game
+  const listGames = <ListGames player={player}/>;
+  if (player.game == null) {
+    content = listGames;
+  }
+  else {
+    content = <GameViewer id={player.game.id} />;
+  }
+
+
+  return (<div className="App full-height">
       <Router>
         <Switch>
           <Route path="/setup/:ip">
             <Setup />
           </Route>
+          <Route path="/list">
+            {listGames}
+          </Route>
           <Route path="/">
-            <Join />
+            {content}
           </Route>
         </Switch>
       </Router>
@@ -72,8 +117,6 @@ function Setup() {
       {status}
     </div>
   );
-
-  return <h2>Setup Callback {ip}</h2>;
 }
 
 export default withAuthenticator(App);

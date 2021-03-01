@@ -43,7 +43,11 @@
         },
         "EspChessAddUser": {
           "deploymentBucketName": "amplify-espchessserver-devtwo-61608-deployment",
-          "s3Key": "amplify-builds/EspChessAddUser-61734751326632654c71-build.zip"
+          "s3Key": "amplify-builds/EspChessAddUser-494d633730764c364a56-build.zip"
+        },
+        "EspChessStartGame": {
+          "deploymentBucketName": "amplify-espchessserver-devtwo-61608-deployment",
+          "s3Key": "amplify-builds/EspChessStartGame-514a7746715a33577077-build.zip"
         }
       },
       "hosting": {

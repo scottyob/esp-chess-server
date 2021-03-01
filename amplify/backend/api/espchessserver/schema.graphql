@@ -8,9 +8,10 @@ type Cert {
   awsCertCrt: String
 }
 
-#  addUser: String! @function(name: "EspChessAddUser-${env}")
 type Query {
   setup: Cert @function(name: "EspChessSetup-${env}")
+  addUser: String @function(name: "EspChessAddUser-${env}")
+  startGame(opponent: String): String @function(name: "EspChessStartGame-${env}")
 }
 
 """
@@ -19,8 +20,14 @@ of a game of chess
 """
 
 # If no player, assume AI
-type Game @model {
-  id: ID!
+type Game @model
+  @auth(rules: [
+    { allow: groups, groups: ["NOBODY"], operations: [update, delete, create] },
+    { allow: owner, ownerField: "id", operations: [read] },
+    { allow: private, ownerField: "id", operations: [read] },
+  ])
+{
+id: ID!
   blackPlayer: Player @connection(name: "GamePlayer")
   whitePlayer: Player @connection(name: "GamePlayer")
   

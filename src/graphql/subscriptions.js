@@ -10,27 +10,27 @@ export const onCreateGame = /* GraphQL */ `
       updatedAt
       blackPlayer {
         id
+        holding
+        createdAt
+        updatedAt
         game {
           id
           fen
           createdAt
           updatedAt
         }
-        holding
-        createdAt
-        updatedAt
       }
       whitePlayer {
         id
+        holding
+        createdAt
+        updatedAt
         game {
           id
           fen
           createdAt
           updatedAt
         }
-        holding
-        createdAt
-        updatedAt
       }
     }
   }
@@ -44,27 +44,27 @@ export const onUpdateGame = /* GraphQL */ `
       updatedAt
       blackPlayer {
         id
+        holding
+        createdAt
+        updatedAt
         game {
           id
           fen
           createdAt
           updatedAt
         }
-        holding
-        createdAt
-        updatedAt
       }
       whitePlayer {
         id
+        holding
+        createdAt
+        updatedAt
         game {
           id
           fen
           createdAt
           updatedAt
         }
-        holding
-        createdAt
-        updatedAt
       }
     }
   }
@@ -78,27 +78,27 @@ export const onDeleteGame = /* GraphQL */ `
       updatedAt
       blackPlayer {
         id
+        holding
+        createdAt
+        updatedAt
         game {
           id
           fen
           createdAt
           updatedAt
         }
-        holding
-        createdAt
-        updatedAt
       }
       whitePlayer {
         id
+        holding
+        createdAt
+        updatedAt
         game {
           id
           fen
           createdAt
           updatedAt
         }
-        holding
-        createdAt
-        updatedAt
       }
     }
   }
@@ -107,6 +107,9 @@ export const onCreatePlayer = /* GraphQL */ `
   subscription OnCreatePlayer {
     onCreatePlayer {
       id
+      holding
+      createdAt
+      updatedAt
       game {
         id
         fen
@@ -125,9 +128,6 @@ export const onCreatePlayer = /* GraphQL */ `
           updatedAt
         }
       }
-      holding
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -135,6 +135,9 @@ export const onUpdatePlayer = /* GraphQL */ `
   subscription OnUpdatePlayer {
     onUpdatePlayer {
       id
+      holding
+      createdAt
+      updatedAt
       game {
         id
         fen
@@ -153,9 +156,6 @@ export const onUpdatePlayer = /* GraphQL */ `
           updatedAt
         }
       }
-      holding
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -163,6 +163,9 @@ export const onDeletePlayer = /* GraphQL */ `
   subscription OnDeletePlayer {
     onDeletePlayer {
       id
+      holding
+      createdAt
+      updatedAt
       game {
         id
         fen
@@ -181,9 +184,6 @@ export const onDeletePlayer = /* GraphQL */ `
           updatedAt
         }
       }
-      holding
-      createdAt
-      updatedAt
     }
   }
 `;

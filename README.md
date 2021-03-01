@@ -18,3 +18,10 @@ The game board is stored in [chess.js](https://github.com/jhlywa/chess.js)
 AWS IoT is used for providing an MQTT interface for a Players chess board, and the game they're playing.  AWS IoT does need to be setup with the appropirate permissions and events to feed back into this server component.
 
 At some point I'll get around to documenting how to setup the AWS IoT stack to interface with this game service.
+
+## Yet to-do
+- "Watch" button does not do anything
+- Select white/black.  Initiator always white.
+- Game history
+- leaving/resigning a game
+- Ability to upload/generate avatar

@@ -16,38 +16,9 @@ export const addUser = /* GraphQL */ `
     addUser
   }
 `;
-export const getGame = /* GraphQL */ `
-  query GetGame($id: ID!) {
-    getGame(id: $id) {
-      id
-      fen
-      createdAt
-      updatedAt
-      blackPlayer {
-        id
-        game {
-          id
-          fen
-          createdAt
-          updatedAt
-        }
-        holding
-        createdAt
-        updatedAt
-      }
-      whitePlayer {
-        id
-        game {
-          id
-          fen
-          createdAt
-          updatedAt
-        }
-        holding
-        createdAt
-        updatedAt
-      }
-    }
+export const startGame = /* GraphQL */ `
+  query StartGame($opponent: String) {
+    startGame(opponent: $opponent)
   }
 `;
 export const listGames = /* GraphQL */ `
@@ -79,6 +50,40 @@ export const listGames = /* GraphQL */ `
     }
   }
 `;
+export const getGame = /* GraphQL */ `
+  query GetGame($id: ID!) {
+    getGame(id: $id) {
+      id
+      fen
+      createdAt
+      updatedAt
+      blackPlayer {
+        id
+        holding
+        createdAt
+        updatedAt
+        game {
+          id
+          fen
+          createdAt
+          updatedAt
+        }
+      }
+      whitePlayer {
+        id
+        holding
+        createdAt
+        updatedAt
+        game {
+          id
+          fen
+          createdAt
+          updatedAt
+        }
+      }
+    }
+  }
+`;
 export const listPlayers = /* GraphQL */ `
   query ListPlayers(
     $filter: ModelPlayerFilterInput
@@ -88,15 +93,15 @@ export const listPlayers = /* GraphQL */ `
     listPlayers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        holding
+        createdAt
+        updatedAt
         game {
           id
           fen
           createdAt
           updatedAt
         }
-        holding
-        createdAt
-        updatedAt
       }
       nextToken
     }
@@ -106,6 +111,9 @@ export const getPlayer = /* GraphQL */ `
   query GetPlayer($id: ID!) {
     getPlayer(id: $id) {
       id
+      holding
+      createdAt
+      updatedAt
       game {
         id
         fen
@@ -124,9 +132,6 @@ export const getPlayer = /* GraphQL */ `
           updatedAt
         }
       }
-      holding
-      createdAt
-      updatedAt
     }
   }
 `;
