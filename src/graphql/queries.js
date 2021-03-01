@@ -11,17 +11,27 @@ export const setup = /* GraphQL */ `
     }
   }
 `;
+export const addUser = /* GraphQL */ `
+  query AddUser {
+    addUser
+  }
+`;
 export const getGame = /* GraphQL */ `
   query GetGame($id: ID!) {
     getGame(id: $id) {
       id
+      fen
+      createdAt
+      updatedAt
       blackPlayer {
         id
         game {
           id
+          fen
           createdAt
           updatedAt
         }
+        holding
         createdAt
         updatedAt
       }
@@ -29,14 +39,14 @@ export const getGame = /* GraphQL */ `
         id
         game {
           id
+          fen
           createdAt
           updatedAt
         }
+        holding
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -49,44 +59,23 @@ export const listGames = /* GraphQL */ `
     listGames(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        fen
+        createdAt
+        updatedAt
         blackPlayer {
           id
+          holding
           createdAt
           updatedAt
         }
         whitePlayer {
           id
+          holding
           createdAt
           updatedAt
         }
-        createdAt
-        updatedAt
       }
       nextToken
-    }
-  }
-`;
-export const getPlayer = /* GraphQL */ `
-  query GetPlayer($id: ID!) {
-    getPlayer(id: $id) {
-      id
-      game {
-        id
-        blackPlayer {
-          id
-          createdAt
-          updatedAt
-        }
-        whitePlayer {
-          id
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -101,13 +90,43 @@ export const listPlayers = /* GraphQL */ `
         id
         game {
           id
+          fen
           createdAt
           updatedAt
         }
+        holding
         createdAt
         updatedAt
       }
       nextToken
+    }
+  }
+`;
+export const getPlayer = /* GraphQL */ `
+  query GetPlayer($id: ID!) {
+    getPlayer(id: $id) {
+      id
+      game {
+        id
+        fen
+        createdAt
+        updatedAt
+        blackPlayer {
+          id
+          holding
+          createdAt
+          updatedAt
+        }
+        whitePlayer {
+          id
+          holding
+          createdAt
+          updatedAt
+        }
+      }
+      holding
+      createdAt
+      updatedAt
     }
   }
 `;

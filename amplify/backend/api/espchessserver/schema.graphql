@@ -8,6 +8,7 @@ type Cert {
   awsCertCrt: String
 }
 
+#  addUser: String! @function(name: "EspChessAddUser-${env}")
 type Query {
   setup: Cert @function(name: "EspChessSetup-${env}")
 }
@@ -22,8 +23,21 @@ type Game @model {
   id: ID!
   blackPlayer: Player @connection(name: "GamePlayer")
   whitePlayer: Player @connection(name: "GamePlayer")
+  
+  fen: String!  # Forsyth-Edwards Notation of game state
 }
 
-type Player @model {
+type Player @model
+  @auth(rules: [
+    { allow: groups, groups: ["NOBODY"], operations: [update, delete, create] },
+    { allow: owner, ownerField: "id", operations: [read] },
+    { allow: private, ownerField: "id", operations: [read] },
+  ])
+{
+  id: ID!
+
   game: Game @connection(name: "GamePlayer")
+  
+  # some game state
+  holding: String  # coordinate of the piece we're holding
 }

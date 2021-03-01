@@ -1,3 +1,7 @@
+# ABOUT
+#  This is a little helper script used to setup Cloud9
+#  (https://hub.docker.com/r/linuxserver/cloud9) to be used for dev
+
 echo "Setting up node"
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 curl -fsSL https://deb.nodesource.com/setup_15.x | sudo -E bash -
@@ -21,4 +25,4 @@ if [ ! -f amplify_credentials ]; then
     echo "NOTE:  Edit amplify_credentials & ~/.aws/credentials file"
 fi
 
-cp amplify_credentials > ~/.aws/credentials
+cp amplify_credentials ~/.aws/credentials

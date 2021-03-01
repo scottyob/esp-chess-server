@@ -10,6 +10,7 @@ projects:
         codeGenTarget: javascript
         generatedFileName: ''
         docsFilePath: src/graphql
+        maxDepth: 4
   espchessserver:
     schemaPath: src/graphql/schema.json
     includes:

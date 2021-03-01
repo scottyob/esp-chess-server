@@ -5,13 +5,18 @@ export const onCreateGame = /* GraphQL */ `
   subscription OnCreateGame {
     onCreateGame {
       id
+      fen
+      createdAt
+      updatedAt
       blackPlayer {
         id
         game {
           id
+          fen
           createdAt
           updatedAt
         }
+        holding
         createdAt
         updatedAt
       }
@@ -19,14 +24,14 @@ export const onCreateGame = /* GraphQL */ `
         id
         game {
           id
+          fen
           createdAt
           updatedAt
         }
+        holding
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -34,13 +39,18 @@ export const onUpdateGame = /* GraphQL */ `
   subscription OnUpdateGame {
     onUpdateGame {
       id
+      fen
+      createdAt
+      updatedAt
       blackPlayer {
         id
         game {
           id
+          fen
           createdAt
           updatedAt
         }
+        holding
         createdAt
         updatedAt
       }
@@ -48,14 +58,14 @@ export const onUpdateGame = /* GraphQL */ `
         id
         game {
           id
+          fen
           createdAt
           updatedAt
         }
+        holding
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -63,13 +73,18 @@ export const onDeleteGame = /* GraphQL */ `
   subscription OnDeleteGame {
     onDeleteGame {
       id
+      fen
+      createdAt
+      updatedAt
       blackPlayer {
         id
         game {
           id
+          fen
           createdAt
           updatedAt
         }
+        holding
         createdAt
         updatedAt
       }
@@ -77,14 +92,14 @@ export const onDeleteGame = /* GraphQL */ `
         id
         game {
           id
+          fen
           createdAt
           updatedAt
         }
+        holding
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -94,19 +109,23 @@ export const onCreatePlayer = /* GraphQL */ `
       id
       game {
         id
+        fen
+        createdAt
+        updatedAt
         blackPlayer {
           id
+          holding
           createdAt
           updatedAt
         }
         whitePlayer {
           id
+          holding
           createdAt
           updatedAt
         }
-        createdAt
-        updatedAt
       }
+      holding
       createdAt
       updatedAt
     }
@@ -118,19 +137,23 @@ export const onUpdatePlayer = /* GraphQL */ `
       id
       game {
         id
+        fen
+        createdAt
+        updatedAt
         blackPlayer {
           id
+          holding
           createdAt
           updatedAt
         }
         whitePlayer {
           id
+          holding
           createdAt
           updatedAt
         }
-        createdAt
-        updatedAt
       }
+      holding
       createdAt
       updatedAt
     }
@@ -142,19 +165,23 @@ export const onDeletePlayer = /* GraphQL */ `
       id
       game {
         id
+        fen
+        createdAt
+        updatedAt
         blackPlayer {
           id
+          holding
           createdAt
           updatedAt
         }
         whitePlayer {
           id
+          holding
           createdAt
           updatedAt
         }
-        createdAt
-        updatedAt
       }
+      holding
       createdAt
       updatedAt
     }

@@ -8,13 +8,18 @@ export const createGame = /* GraphQL */ `
   ) {
     createGame(input: $input, condition: $condition) {
       id
+      fen
+      createdAt
+      updatedAt
       blackPlayer {
         id
         game {
           id
+          fen
           createdAt
           updatedAt
         }
+        holding
         createdAt
         updatedAt
       }
@@ -22,14 +27,14 @@ export const createGame = /* GraphQL */ `
         id
         game {
           id
+          fen
           createdAt
           updatedAt
         }
+        holding
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -40,13 +45,18 @@ export const updateGame = /* GraphQL */ `
   ) {
     updateGame(input: $input, condition: $condition) {
       id
+      fen
+      createdAt
+      updatedAt
       blackPlayer {
         id
         game {
           id
+          fen
           createdAt
           updatedAt
         }
+        holding
         createdAt
         updatedAt
       }
@@ -54,14 +64,14 @@ export const updateGame = /* GraphQL */ `
         id
         game {
           id
+          fen
           createdAt
           updatedAt
         }
+        holding
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -72,13 +82,18 @@ export const deleteGame = /* GraphQL */ `
   ) {
     deleteGame(input: $input, condition: $condition) {
       id
+      fen
+      createdAt
+      updatedAt
       blackPlayer {
         id
         game {
           id
+          fen
           createdAt
           updatedAt
         }
+        holding
         createdAt
         updatedAt
       }
@@ -86,14 +101,14 @@ export const deleteGame = /* GraphQL */ `
         id
         game {
           id
+          fen
           createdAt
           updatedAt
         }
+        holding
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -106,19 +121,23 @@ export const createPlayer = /* GraphQL */ `
       id
       game {
         id
+        fen
+        createdAt
+        updatedAt
         blackPlayer {
           id
+          holding
           createdAt
           updatedAt
         }
         whitePlayer {
           id
+          holding
           createdAt
           updatedAt
         }
-        createdAt
-        updatedAt
       }
+      holding
       createdAt
       updatedAt
     }
@@ -133,19 +152,23 @@ export const updatePlayer = /* GraphQL */ `
       id
       game {
         id
+        fen
+        createdAt
+        updatedAt
         blackPlayer {
           id
+          holding
           createdAt
           updatedAt
         }
         whitePlayer {
           id
+          holding
           createdAt
           updatedAt
         }
-        createdAt
-        updatedAt
       }
+      holding
       createdAt
       updatedAt
     }
@@ -160,19 +183,23 @@ export const deletePlayer = /* GraphQL */ `
       id
       game {
         id
+        fen
+        createdAt
+        updatedAt
         blackPlayer {
           id
+          holding
           createdAt
           updatedAt
         }
         whitePlayer {
           id
+          holding
           createdAt
           updatedAt
         }
-        createdAt
-        updatedAt
       }
+      holding
       createdAt
       updatedAt
     }

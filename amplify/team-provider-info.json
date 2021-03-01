@@ -36,13 +36,14 @@
       "AmplifyAppId": "d3rwxyk20q1igr"
     },
     "categories": {
-      "auth": {
-        "espchessserver40781978": {}
-      },
       "function": {
         "EspChessSetup": {
           "deploymentBucketName": "amplify-espchessserver-devtwo-61608-deployment",
           "s3Key": "amplify-builds/EspChessSetup-76414267424879394e4a-build.zip"
+        },
+        "EspChessAddUser": {
+          "deploymentBucketName": "amplify-espchessserver-devtwo-61608-deployment",
+          "s3Key": "amplify-builds/EspChessAddUser-61734751326632654c71-build.zip"
         }
       },
       "hosting": {
@@ -50,6 +51,9 @@
           "appId": "d3rwxyk20q1igr",
           "type": "manual"
         }
+      },
+      "auth": {
+        "espchessserverc032ae7c": {}
       }
     }
   },

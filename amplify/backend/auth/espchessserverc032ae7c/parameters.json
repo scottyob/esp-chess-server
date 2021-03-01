@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "espchessserver40781978_identitypool_40781978",
+    "identityPoolName": "espchessserverc032ae7c_identitypool_c032ae7c",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "espche40781978",
-    "userPoolName": "espchessserver40781978_userpool_40781978",
+    "resourceNameTruncated": "espchec032ae7c",
+    "userPoolName": "espchessserverc032ae7c_userpool_c032ae7c",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -28,10 +28,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "espche40781978_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "espchec032ae7c_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "40781978",
-    "resourceName": "espchessserver40781978",
+    "sharedId": "c032ae7c",
+    "resourceName": "espchessserverc032ae7c",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [

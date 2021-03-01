@@ -11,16 +11,21 @@ import {
 from "react-router-dom";
 
 import * as queries from './graphql/queries';
-import { API } from 'aws-amplify';
-import { Home } from './components/Home.js';
+import { Join } from './components/Join.js';
 import React, { useEffect, useState } from 'react'
 
-import Amplify, { Auth } from 'aws-amplify';
+import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify';
 import awsconfig from './aws-exports';
 
 const axios = require('axios')
 
 Amplify.configure(awsconfig);
+
+async function logout(e) {
+  await Auth.signOut();
+  //  We could also prevent the redirect if that makes sense
+  // e.preventDefault();
+}
 
 function App() {
   return (<div className="App">
@@ -30,10 +35,12 @@ function App() {
             <Setup />
           </Route>
           <Route path="/">
-            <Home />
+            <Join />
           </Route>
         </Switch>
       </Router>
+    
+    <a href="/" onClick={logout}>Logout</a>
     
   </div>);
 }
@@ -47,14 +54,14 @@ function Setup() {
   useEffect(() => {
     status.push(<p key="hostname">Getting Certs... </p>);
     setStatus([...status]);
-    
+
     // API call to generate new sets of keys.
-    API.graphql({query: queries.setup}).then((result) => {
+    API.graphql({ query: queries.setup }).then((result) => {
       var args = '?device_name=' + encodeURIComponent(result.data.setup.thingName);
       args += "&" + "aws_cert_ca=" + encodeURIComponent(result.data.setup.awsCertCa);
       args += "&" + "aws_cert_crt=" + encodeURIComponent(result.data.setup.awsCertCrt);
       args += "&" + "aws_cert_private=" + encodeURIComponent(result.data.setup.awsCertPrivate);
-      
+
       setStatus([...status, <p key="link"><a href={'http://' + ip + '/setup' + args}>Click HERE to push cert to device</a></p>])
     });
   }, []);
