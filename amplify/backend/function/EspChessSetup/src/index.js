@@ -37,8 +37,9 @@ exports.handler = async function(event, context) {
     var iotThing = await iot.createThing({
         thingName: thingName,
         thingTypeName: "espchess",
-
     }).promise();
+    
+    //TODO:  Setup a new datastore.
 
     // Add the thing to the board group
     var thingGroupResult = await iot.addThingToThingGroup({
