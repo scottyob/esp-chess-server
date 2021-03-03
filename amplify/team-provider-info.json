@@ -39,7 +39,7 @@
       "function": {
         "EspChessSetup": {
           "deploymentBucketName": "amplify-espchessserver-devtwo-61608-deployment",
-          "s3Key": "amplify-builds/EspChessSetup-76414267424879394e4a-build.zip"
+          "s3Key": "amplify-builds/EspChessSetup-746e63526246444b3568-build.zip"
         },
         "EspChessAddUser": {
           "deploymentBucketName": "amplify-espchessserver-devtwo-61608-deployment",
@@ -47,7 +47,15 @@
         },
         "EspChessStartGame": {
           "deploymentBucketName": "amplify-espchessserver-devtwo-61608-deployment",
-          "s3Key": "amplify-builds/EspChessStartGame-514a7746715a33577077-build.zip"
+          "s3Key": "amplify-builds/EspChessStartGame-35516548703167796c41-build.zip"
+        },
+        "espchessserverc032ae7cPreSignup": {
+          "deploymentBucketName": "amplify-espchessserver-devtwo-61608-deployment",
+          "s3Key": "amplify-builds/espchessserverc032ae7cPreSignup-5a6232724933396b6278-build.zip"
+        },
+        "EspChessUpdateBoard": {
+          "deploymentBucketName": "amplify-espchessserver-devtwo-61608-deployment",
+          "s3Key": "amplify-builds/EspChessUpdateBoard-2f37733864716d6f5a6a-build.zip"
         }
       },
       "hosting": {

@@ -31,14 +31,14 @@ exports.handler = async function(event, context) {
 
     var iot = new AWS.Iot();
 
-    const thingName = "espchess-" + event.identity.username;
+    const thingName = process.env.ENV + "-espchess-" + event.identity.username;
 
     // Create a new IoT "thing"
     var iotThing = await iot.createThing({
         thingName: thingName,
         thingTypeName: "espchess",
     }).promise();
-    
+
     //TODO:  Setup a new datastore.
 
     // Add the thing to the board group

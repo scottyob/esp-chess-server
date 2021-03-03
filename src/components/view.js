@@ -14,6 +14,21 @@ Amplify.addPluggable(new AWSIoTProvider({
     aws_pubsub_endpoint: 'wss://a37u0bfoinvf2q-ats.iot.us-west-2.amazonaws.com/mqtt',
 }));
 
+// Board colors map
+const COLORMAP = {
+    1: "red",
+    2: "green",
+    3: "blue",
+    4: "orange",
+    5: "lightgreen",
+}
+const OFF = 0;
+const RED = 1;
+const GREEN = 2;
+const BLUE = 3;
+const ORAGE = 4;
+const LIGHTGREEN = 5;
+
 
 /**
  * Views a game
@@ -24,6 +39,9 @@ const GameViewer = (args) => {
 
     // Subscribe to events
     const [pubsubStatus, setPubsubStatus] = useState('ok');
+
+    // Board colors
+    const [boardColors, setBoardColors] = useState();
     useEffect(() => {
         // Set the auth
         Auth.currentCredentials().then((info) => {
@@ -33,8 +51,10 @@ const GameViewer = (args) => {
         });
 
         // Setup pub-sub environment
-        PubSub.subscribe('#').subscribe({
-            next: data => console.log('Message received', data),
+        PubSub.subscribe('state/devtwo-espchess-scottyob').subscribe({
+            next: data => {
+                setBoardColors(data.value.state)
+            },
             error: error => {
                 console.error(error);
                 setPubsubStatus("PubSub error.  Please check attached IoT policy");
@@ -57,7 +77,7 @@ const GameViewer = (args) => {
         for (const y of Array(8).keys()) {
             initialState[y] = Array(8);
             for (const x of Array(8).keys()) {
-                initialState[y][x] = false;
+                initialState[y][x] = 1;
             }
         }
         setBoardState(initialState);
@@ -74,7 +94,7 @@ const GameViewer = (args) => {
         for (const y of Array(8).keys()) {
             for (const x of Array(8).keys()) {
                 const letter = String.fromCharCode('a'.charCodeAt(0) + x)
-                const key = letter + (y + 1);
+                const key = letter + (8 - y);
                 squareStyles[key] = {};
                 if (boardState[y][x]) {
                     squareStyles[key] = {
@@ -82,33 +102,27 @@ const GameViewer = (args) => {
                         borderRadius: "90%"
                     };
                 }
-                // squareStyles[key]["boxShadow"] = "inset 0 0 1px 8px rgb(255, 0, 0)";
+                if (boardColors != null && boardColors[y][x]) {
+                   squareStyles[key]["boxShadow"] = "inset 0 0 1px 8px " + COLORMAP[boardColors[y][x]]; 
+                }
             }
         }
     }
 
-    const squareClicked = square => {
+    // Update local board state when we click a square
+    const squareClicked = async square => {
         if (boardState == null) {
             return;
         }
         var x = square[0].charCodeAt() - 'a'.charCodeAt();
-        var y = parseInt(square[1]) - 1;
-        boardState[y][x] = !boardState[y][x];
+        var y = 8 - parseInt(square[1]);
+        boardState[y][x] = boardState[y][x] ? 0 : 1;
         setBoardState([...boardState]);
         console.log([...boardState]);
+
+        //TODO:  Don't hardcode devtwo or username
+        await PubSub.publish('update/board/devtwo/devtwo-espchess-scottyob', { state: boardState });
     }
-
-    // Setup the game overlay based on game status
-    // var squareStyles = {
-    //     "a1": { boxShadow: "inset 0 0 1px 8px rgb(255, 0, 0)" },
-    //     "c1": {
-    //         background: "radial-gradient(circle, #fffc00 10%, transparent 100%)",
-    //         borderRadius: "90%",
-    //         boxShadow: "inset 0 0 1px 8px rgb(255, 0, 0)"
-    //     },
-    // };
-    //        // squareStyles = {};
-
 
     // Render
     return (

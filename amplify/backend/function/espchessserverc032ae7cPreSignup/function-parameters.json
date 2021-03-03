@@ -1,0 +1,17 @@
+{
+  "trigger": true,
+  "modules": [
+    "custom"
+  ],
+  "parentResource": "espchessserverc032ae7c",
+  "functionName": "espchessserverc032ae7cPreSignup",
+  "resourceName": "espchessserverc032ae7cPreSignup",
+  "parentStack": "auth",
+  "triggerEnvs": [],
+  "triggerDir": "/usr/lib/node_modules/@aws-amplify/cli/node_modules/amplify-category-auth/provider-utils/awscloudformation/triggers/PreSignup",
+  "triggerTemplate": "PreSignup.json.ejs",
+  "triggerEventPath": "PreSignup.event.json",
+  "roleName": "espchessserverc032ae7cPreSignup",
+  "skipEdit": true,
+  "enableCors": false
+}
