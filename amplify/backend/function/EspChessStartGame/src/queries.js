@@ -8,9 +8,10 @@ module.exports = {
         }
     }
     `,
-    createGame: `mutation createGame($blackId: ID!, $whiteId: ID!) {
+    createGame: `mutation createGame($blackId: ID, $whiteId: ID) {
         createGame(input: {
             fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+            pgn: "",
             gameBlackPlayerId: $blackId,
             gameWhitePlayerId: $whiteId
         }) {

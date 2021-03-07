@@ -9,6 +9,7 @@ export const createGame = /* GraphQL */ `
     createGame(input: $input, condition: $condition) {
       id
       fen
+      pgn
       createdAt
       updatedAt
       blackPlayer {
@@ -19,6 +20,7 @@ export const createGame = /* GraphQL */ `
         game {
           id
           fen
+          pgn
           createdAt
           updatedAt
         }
@@ -31,6 +33,7 @@ export const createGame = /* GraphQL */ `
         game {
           id
           fen
+          pgn
           createdAt
           updatedAt
         }
@@ -46,6 +49,7 @@ export const updateGame = /* GraphQL */ `
     updateGame(input: $input, condition: $condition) {
       id
       fen
+      pgn
       createdAt
       updatedAt
       blackPlayer {
@@ -56,6 +60,7 @@ export const updateGame = /* GraphQL */ `
         game {
           id
           fen
+          pgn
           createdAt
           updatedAt
         }
@@ -68,6 +73,7 @@ export const updateGame = /* GraphQL */ `
         game {
           id
           fen
+          pgn
           createdAt
           updatedAt
         }
@@ -83,6 +89,7 @@ export const deleteGame = /* GraphQL */ `
     deleteGame(input: $input, condition: $condition) {
       id
       fen
+      pgn
       createdAt
       updatedAt
       blackPlayer {
@@ -93,6 +100,7 @@ export const deleteGame = /* GraphQL */ `
         game {
           id
           fen
+          pgn
           createdAt
           updatedAt
         }
@@ -105,6 +113,7 @@ export const deleteGame = /* GraphQL */ `
         game {
           id
           fen
+          pgn
           createdAt
           updatedAt
         }
@@ -125,6 +134,7 @@ export const createPlayer = /* GraphQL */ `
       game {
         id
         fen
+        pgn
         createdAt
         updatedAt
         blackPlayer {
@@ -156,6 +166,7 @@ export const updatePlayer = /* GraphQL */ `
       game {
         id
         fen
+        pgn
         createdAt
         updatedAt
         blackPlayer {
@@ -187,6 +198,7 @@ export const deletePlayer = /* GraphQL */ `
       game {
         id
         fen
+        pgn
         createdAt
         updatedAt
         blackPlayer {

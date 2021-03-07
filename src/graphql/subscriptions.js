@@ -6,6 +6,7 @@ export const onCreateGame = /* GraphQL */ `
     onCreateGame {
       id
       fen
+      pgn
       createdAt
       updatedAt
       blackPlayer {
@@ -16,6 +17,7 @@ export const onCreateGame = /* GraphQL */ `
         game {
           id
           fen
+          pgn
           createdAt
           updatedAt
         }
@@ -28,6 +30,7 @@ export const onCreateGame = /* GraphQL */ `
         game {
           id
           fen
+          pgn
           createdAt
           updatedAt
         }
@@ -40,6 +43,7 @@ export const onUpdateGame = /* GraphQL */ `
     onUpdateGame {
       id
       fen
+      pgn
       createdAt
       updatedAt
       blackPlayer {
@@ -50,6 +54,7 @@ export const onUpdateGame = /* GraphQL */ `
         game {
           id
           fen
+          pgn
           createdAt
           updatedAt
         }
@@ -62,6 +67,7 @@ export const onUpdateGame = /* GraphQL */ `
         game {
           id
           fen
+          pgn
           createdAt
           updatedAt
         }
@@ -74,6 +80,7 @@ export const onDeleteGame = /* GraphQL */ `
     onDeleteGame {
       id
       fen
+      pgn
       createdAt
       updatedAt
       blackPlayer {
@@ -84,6 +91,7 @@ export const onDeleteGame = /* GraphQL */ `
         game {
           id
           fen
+          pgn
           createdAt
           updatedAt
         }
@@ -96,6 +104,7 @@ export const onDeleteGame = /* GraphQL */ `
         game {
           id
           fen
+          pgn
           createdAt
           updatedAt
         }
@@ -113,6 +122,7 @@ export const onCreatePlayer = /* GraphQL */ `
       game {
         id
         fen
+        pgn
         createdAt
         updatedAt
         blackPlayer {
@@ -141,6 +151,7 @@ export const onUpdatePlayer = /* GraphQL */ `
       game {
         id
         fen
+        pgn
         createdAt
         updatedAt
         blackPlayer {
@@ -169,6 +180,7 @@ export const onDeletePlayer = /* GraphQL */ `
       game {
         id
         fen
+        pgn
         createdAt
         updatedAt
         blackPlayer {

@@ -12,6 +12,7 @@ type Query {
   setup: Cert @function(name: "EspChessSetup-${env}")
   addUser: String @function(name: "EspChessAddUser-${env}")
   startGame(opponent: String): String @function(name: "EspChessStartGame-${env}")
+  leaveGame: String @function(name: "EspChessLeaveGame-${env}")
 }
 
 """
@@ -32,6 +33,7 @@ id: ID!
   whitePlayer: Player @connection(name: "GamePlayer")
   
   fen: String!  # Forsyth-Edwards Notation of game state
+  pgn: String!  # History
 }
 
 type Player @model

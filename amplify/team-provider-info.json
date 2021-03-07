@@ -43,11 +43,11 @@
         },
         "EspChessAddUser": {
           "deploymentBucketName": "amplify-espchessserver-devtwo-61608-deployment",
-          "s3Key": "amplify-builds/EspChessAddUser-494d633730764c364a56-build.zip"
+          "s3Key": "amplify-builds/EspChessAddUser-7644614839436d756a4b-build.zip"
         },
         "EspChessStartGame": {
           "deploymentBucketName": "amplify-espchessserver-devtwo-61608-deployment",
-          "s3Key": "amplify-builds/EspChessStartGame-35516548703167796c41-build.zip"
+          "s3Key": "amplify-builds/EspChessStartGame-38585461435a64613038-build.zip"
         },
         "espchessserverc032ae7cPreSignup": {
           "deploymentBucketName": "amplify-espchessserver-devtwo-61608-deployment",
@@ -55,7 +55,15 @@
         },
         "EspChessUpdateBoard": {
           "deploymentBucketName": "amplify-espchessserver-devtwo-61608-deployment",
-          "s3Key": "amplify-builds/EspChessUpdateBoard-2f37733864716d6f5a6a-build.zip"
+          "s3Key": "amplify-builds/EspChessUpdateBoard-52512f797866664e3552-build.zip"
+        },
+        "EspChessLayer": {
+          "deploymentBucketName": "amplify-espchessserver-devtwo-61608-deployment",
+          "s3Key": "amplify-builds/EspChessLayer-build.zip"
+        },
+        "EspChessLeaveGame": {
+          "deploymentBucketName": "amplify-espchessserver-devtwo-61608-deployment",
+          "s3Key": "amplify-builds/EspChessLeaveGame-626f5977594153303272-build.zip"
         }
       },
       "hosting": {
@@ -66,6 +74,25 @@
       },
       "auth": {
         "espchessserverc032ae7c": {}
+      }
+    },
+    "nonCFNdata": {
+      "function": {
+        "EspChessLayer": {
+          "layerVersionMap": {
+            "1": {
+              "permissions": [
+                {
+                  "type": "public"
+                },
+                {
+                  "type": "private"
+                }
+              ],
+              "hash": "h8wwvkm18ceMEV2U2OqHdm6nj40uwW4WoUaYr+JLl8A="
+            }
+          }
+        }
       }
     }
   },

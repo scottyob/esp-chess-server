@@ -21,6 +21,11 @@ export const startGame = /* GraphQL */ `
     startGame(opponent: $opponent)
   }
 `;
+export const leaveGame = /* GraphQL */ `
+  query LeaveGame {
+    leaveGame
+  }
+`;
 export const listGames = /* GraphQL */ `
   query ListGames(
     $filter: ModelGameFilterInput
@@ -31,6 +36,7 @@ export const listGames = /* GraphQL */ `
       items {
         id
         fen
+        pgn
         createdAt
         updatedAt
         blackPlayer {
@@ -55,6 +61,7 @@ export const getGame = /* GraphQL */ `
     getGame(id: $id) {
       id
       fen
+      pgn
       createdAt
       updatedAt
       blackPlayer {
@@ -65,6 +72,7 @@ export const getGame = /* GraphQL */ `
         game {
           id
           fen
+          pgn
           createdAt
           updatedAt
         }
@@ -77,6 +85,7 @@ export const getGame = /* GraphQL */ `
         game {
           id
           fen
+          pgn
           createdAt
           updatedAt
         }
@@ -99,6 +108,7 @@ export const listPlayers = /* GraphQL */ `
         game {
           id
           fen
+          pgn
           createdAt
           updatedAt
         }
@@ -117,6 +127,7 @@ export const getPlayer = /* GraphQL */ `
       game {
         id
         fen
+        pgn
         createdAt
         updatedAt
         blackPlayer {

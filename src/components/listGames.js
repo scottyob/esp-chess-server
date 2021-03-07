@@ -5,6 +5,17 @@ import * as queries from '../graphql/queries';
 import React, { useEffect, useState } from 'react'
 import Loader from "react-loader-spinner";
 import { PlayerSelect } from './playerSelect.js'
+import { startGame } from '../graphql/queries';
+
+
+async function beginAI(remoteId) {
+  const id = await API.graphql(graphqlOperation(startGame, { opponent: null }))
+  console.log("Started game: ");
+  console.log(id);
+
+  // Redirect to home
+  window.location.assign("/");
+}
 
 
 const ListGames = (args) => {
@@ -56,7 +67,7 @@ const ListGames = (args) => {
               <p className="card-text"><strong>Rando:</strong>  A random AI character that has no skill, but does know the rules of the game!  Rando's wins are pure luck</p>
               <div className="d-flex justify-content-between align-items-center">
                 <div className="btn-group">
-                  <button type="button" className="btn btn-sm btn-outline-secondary">Play</button>
+                  <button type="button" onClick={beginAI} className="btn btn-sm btn-outline-secondary">Play</button>
                 </div>
                 <small className="text-muted">Online</small>
               </div>

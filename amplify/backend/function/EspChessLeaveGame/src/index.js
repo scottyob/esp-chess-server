@@ -4,6 +4,7 @@
 	ENV
 	REGION
 Amplify Params - DO NOT EDIT */
+
 const https = require('https');
 const AWS = require("aws-sdk");
 const urlParse = require("url").URL;
@@ -17,7 +18,7 @@ exports.handler = async(event) => {
     const req = new AWS.HttpRequest(appsyncUrl, region);
 
     const item = {
-        name: event.identity.username
+        id: event.identity.username
     };
 
     req.method = "POST";
@@ -26,7 +27,7 @@ exports.handler = async(event) => {
     req.headers["Content-Type"] = "application/json";
     req.body = JSON.stringify({
         query: graphqlQuery,
-        operationName: "createPlayer",
+        operationName: "leaveGame",
         variables: item
     });
 

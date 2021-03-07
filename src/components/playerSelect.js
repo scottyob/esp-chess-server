@@ -14,9 +14,9 @@ async function beginGame(remoteId) {
 
 const PlayerSelect = (args) => {
 
-  var btn = null;
-  if (args.player.game) {
-    btn = <button type="button" className="btn btn-sm btn-outline-secondary">Watch</button>;
+    var btn = null;
+    if (args.player.game) {
+      btn = <a href={"/game/" + args.player.game.id} type="button" className="btn btn-sm btn-outline-secondary">Watch</a>;
   }
   else {
     btn = <button onClick={() => beginGame(args.player.id)} type="button" className="btn btn-sm btn-outline-secondary">Play</button>;

@@ -69,15 +69,18 @@ exports.handler = async(event) => {
 	const playerId = player.data.getPlayer.id;
 
 	// Get the opponent player
-	const opponent = await doQuery(queries.getPlayer, "getPlayer", { id: event.arguments.opponent });
-	console.log(JSON.stringify(opponent));
-	if (opponent.data.getPlayer == null) {
-		throw "opponent not found";
+	var opponentId = null;
+	if (event.arguments.opponent) {
+		const opponent = await doQuery(queries.getPlayer, "getPlayer", { id: event.arguments.opponent });
+		console.log(JSON.stringify(opponent));
+		if (opponent.data.getPlayer == null) {
+			throw "opponent not found";
+		}
+		if (opponent.data.getPlayer.game != null) {
+			throw "opponent already in game";
+		}
+		const opponentId = opponent.data.getPlayer.id;
 	}
-	if (opponent.data.getPlayer.game != null) {
-		throw "opponent already in game";
-	}
-	const opponentId = opponent.data.getPlayer.id;
 
 	// Create a new game of chess with fresh state
 	const game = await doQuery(queries.createGame, "createGame", {
@@ -91,7 +94,9 @@ exports.handler = async(event) => {
 	// local state
 	console.log("Linking...");
 	console.log(JSON.stringify(await doQuery(queries.linkPlayer, "updatePlayer", { playerId: playerId, gameId: gameId })));
-	console.log(JSON.stringify(await doQuery(queries.linkPlayer, "updatePlayer", { playerId: opponentId, gameId: gameId })));
+	if (opponentId) {
+		console.log(JSON.stringify(await doQuery(queries.linkPlayer, "updatePlayer", { playerId: opponentId, gameId: gameId })));
+	}
 
 	// Return the ID of the game created
 	return game.data.createGame.id;
