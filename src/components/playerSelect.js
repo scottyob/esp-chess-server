@@ -1,9 +1,8 @@
-import * as queries from '../graphql/queries';
 import { API, graphqlOperation } from 'aws-amplify';
 import { startGame } from '../graphql/queries';
 
 async function beginGame(remoteId) {
-  const id = await API.graphql(graphqlOperation(startGame, { opponent: remoteId }))
+  const id = await API.graphql(graphqlOperation(startGame, { opponent: remoteId }));
   console.log("Started game: ");
   console.log(id);
 
@@ -38,6 +37,6 @@ const PlayerSelect = (args) => {
           </div>
         </div>
   );
-}
+};
 
-export { PlayerSelect }
+export { PlayerSelect };

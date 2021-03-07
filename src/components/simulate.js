@@ -3,7 +3,7 @@
  */
 import Amplify, { Auth, API, graphqlOperation, PubSub } from 'aws-amplify';
 import Chessboard from "chessboardjsx";
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import Loader from "react-loader-spinner";
 import { getGame } from '../graphql/queries';
 import { AWSIoTProvider } from '@aws-amplify/pubsub';
@@ -24,14 +24,7 @@ const COLORMAP = {
     4: "orange",
     5: "lightgreen",
     6: "gold",
-}
-const OFF = 0;
-const RED = 1;
-const GREEN = 2;
-const BLUE = 3;
-const ORAGE = 4;
-const LIGHTGREEN = 5;
-const GOLD = 6;
+};
 
 
 /**
@@ -59,7 +52,7 @@ const SimulateViewer = (args) => {
             next: data => {
                 console.log("Got data: ");
                 console.log(data.value);
-                setBoardColors(data.value.state)
+                setBoardColors(data.value.state);
             },
             error: error => {
                 console.error(error);
@@ -71,20 +64,23 @@ const SimulateViewer = (args) => {
 
     // Load up the game from database
     const [game, setGame] = useState();
-    useEffect(async() => {
-        var result = await API.graphql(graphqlOperation(getGame, { id: args.id }));
-        setGame(result.data.getGame);
+    useEffect(() => {
+        async function fetchGame(id) {
+            var result = await API.graphql(graphqlOperation(getGame, { id: id }));
+            setGame(result.data.getGame);
+        }
+        fetchGame(args.id);
 
         // Subscribe to game updates
-        const subscription = API.graphql(
+        API.graphql(
             graphqlOperation(subscriptions.onUpdateGame)
         ).subscribe({
             next: async({ provider, value }) => {
-                result = await API.graphql(graphqlOperation(getGame, { id: args.id }));
+                var result = await API.graphql(graphqlOperation(getGame, { id: args.id }));
                 setGame(result.data.getGame);
             }
-        })
-    }, [])
+        });
+    }, [args.id]);
 
     // Setup the local board state
     const [boardState, setBoardState] = useState([
@@ -108,7 +104,7 @@ const SimulateViewer = (args) => {
         // console.log(x, String.fromCharCode('A'.charCodeAt(0) + x));
         for (const y of Array(8).keys()) {
             for (const x of Array(8).keys()) {
-                const letter = String.fromCharCode('a'.charCodeAt(0) + x)
+                const letter = String.fromCharCode('a'.charCodeAt(0) + x);
                 const key = letter + (8 - y);
                 squareStyles[key] = {};
                 if (boardState[y][x]) {
@@ -131,7 +127,7 @@ const SimulateViewer = (args) => {
         }
 
         var x = square[0].charCodeAt() - 'a'.charCodeAt();
-        var y = 8 - parseInt(square[1]);
+        var y = 8 - parseInt(square[1], 10);
         var newState = JSON.parse(JSON.stringify(boardState));
         newState[y][x] = newState[y][x] ? 0 : 1;
         setBoardState(newState);
@@ -141,7 +137,7 @@ const SimulateViewer = (args) => {
             "data": { state: newState }
         });
         await PubSub.publish('update/board/devtwo/devtwo-espchess-scottyob', { state: newState });
-    }
+    };
 
     var whitePlayer = "computer";
     var blackPlayer = "computer";
@@ -173,6 +169,6 @@ const SimulateViewer = (args) => {
                 <div><strong>ID: </strong>{game.id}</div>
             </div>
         </div>);
-}
+};
 
-export { SimulateViewer }
+export { SimulateViewer };

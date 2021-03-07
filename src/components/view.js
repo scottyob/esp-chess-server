@@ -1,9 +1,8 @@
-import Amplify, { Auth, API, graphqlOperation, PubSub } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
 import Chessboard from "chessboardjsx";
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import Loader from "react-loader-spinner";
 import { getGame } from '../graphql/queries';
-import { AWSIoTProvider } from '@aws-amplify/pubsub';
 import * as subscriptions from '../graphql/subscriptions';
 import * as queries from '../graphql/queries';
 const Chess = require("chess.js");
@@ -12,25 +11,28 @@ const GameViewer = (args) => {
 
     // Load up the game from database
     const [game, setGame] = useState();
-    useEffect(async() => {
-        var result = await API.graphql(graphqlOperation(getGame, { id: args.id }));
-        setGame(result.data.getGame);
+    useEffect(() => {
+        async function fetchGame(id) {
+            var result = await API.graphql(graphqlOperation(getGame, { id: id }));
+            setGame(result.data.getGame);
+        }
+        fetchGame(args.id);
 
         // Subscribe to game updates
-        const subscription = API.graphql(
+        API.graphql(
             graphqlOperation(subscriptions.onUpdateGame)
         ).subscribe({
             next: async({ provider, value }) => {
-                result = await API.graphql(graphqlOperation(getGame, { id: args.id }));
+                var result = await API.graphql(graphqlOperation(getGame, { id: args.id }));
                 setGame(result.data.getGame);
             }
-        })
-    }, [])
+        });
+    }, [args.id]);
 
 
     var chessBoard = <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} />;
-    var white = "computer"
-    var black = "computer"
+    var white = "computer";
+    var black = "computer";
     var status = <div />;
     var leaveButton = <div />;
     var history = "";
@@ -40,7 +42,7 @@ const GameViewer = (args) => {
         API.graphql({ query: queries.leaveGame }).then((result) => {
             window.location.replace("/");
         });
-    }
+    };
 
 
     if (game) {
@@ -72,7 +74,7 @@ const GameViewer = (args) => {
         }
 
         if (
-            args.player.game && game.id == args.player.game.id
+            args.player.game && game.id === args.player.game.id
         ) {
             leaveButton = <button type="button" onClick={leave} class="btn btn-outline-danger">Leave Game</button>;
         }
@@ -113,6 +115,6 @@ const GameViewer = (args) => {
       
     </main>);
 
-}
+};
 
-export { GameViewer }
+export { GameViewer };

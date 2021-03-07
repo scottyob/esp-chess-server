@@ -1,15 +1,13 @@
-import { Auth, API, graphqlOperation } from 'aws-amplify'
-import { listPlayers, getPlayer, addUser } from '../graphql/queries';
-import * as mutations from '../graphql/mutations';
-import * as queries from '../graphql/queries';
-import React, { useEffect, useState } from 'react'
+import { Auth, API, graphqlOperation } from 'aws-amplify';
+import { listPlayers } from '../graphql/queries';
+import { useEffect, useState } from 'react';
 import Loader from "react-loader-spinner";
-import { PlayerSelect } from './playerSelect.js'
+import { PlayerSelect } from './playerSelect.js';
 import { startGame } from '../graphql/queries';
 
 
 async function beginAI(remoteId) {
-  const id = await API.graphql(graphqlOperation(startGame, { opponent: null }))
+  const id = await API.graphql(graphqlOperation(startGame, { opponent: null }));
   console.log("Started game: ");
   console.log(id);
 
@@ -26,14 +24,16 @@ const ListGames = (args) => {
     Auth.currentUserInfo().then(async user => {
       // Load the players list.
       const dbPlayers = await API.graphql(graphqlOperation(listPlayers));
-      const playersList = dbPlayers.data.listPlayers.items.map(p => <PlayerSelect key={p.id} player={p} localPlayer={args.player} />)
+      const playersList = dbPlayers.data.listPlayers.items.map(
+        p => <PlayerSelect key={p.id} player={p} localPlayer={args.player} />
+      );
       setPlayers(
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
           {playersList}
         </div>
       );
-    })
-  }, []);
+    });
+  }, [args.player]);
 
 
   return (
@@ -79,8 +79,8 @@ const ListGames = (args) => {
   </div>
 
 
-</main>)
+</main>);
 
-}
+};
 
-export { ListGames }
+export { ListGames };
