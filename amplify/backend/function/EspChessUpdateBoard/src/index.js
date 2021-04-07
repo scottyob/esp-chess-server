@@ -26,6 +26,8 @@ const BLUE = 3;
 const ORANGE = 4;
 const LIGHTGREEN = 5;
 const GOLD = 6;
+const WHITE = 7;
+const GRAY = 8;
 
 async function doQuery(query, operationName, args) {
     const req = new AWS.HttpRequest(appsyncUrl, region);
@@ -281,7 +283,11 @@ async function DoMove(game, player, state) {
         var otherCoord = otherCoords[0];
         game.move({ from: player.holding, to: otherCoord, promotion: 'q' });
 
-        if (game.blackPlayer === null || game.whitePlayer === null) {
+        console.log("Debug Players: ");
+        console.log(player.game.blackPlayer);
+        console.log(player.game.whitePlayer);
+
+        if (player.game.blackPlayer === null || player.game.whitePlayer === null) {
             // TODO:  Remove me, moves for the other player.
             var moves = game.moves();
             const move = moves[Math.floor(Math.random() * moves.length)]
@@ -305,28 +311,112 @@ async function DoMove(game, player, state) {
 
 }
 
+const VERSION = "1.0"
+const IMAGE_HOST = "scottyob-pub.s3-us-west-2.amazonaws.com"
+const IMAGE_FILENAME = "/espchess-1.0.bin"
+
 exports.handler = async(event, context) => {
     // Find the local players name
     const nameSplit = event.devName.split("-")
     const playerName = nameSplit[nameSplit.length - 1]
 
+    console.log(event);
+
+    // Check if OTA required
+    if(event.version != VERSION) {
+        return iotdata.publish({
+            topic: "state/" + event.devName + "/ota",
+            payload: JSON.stringify({
+                version: VERSION,
+                host: IMAGE_HOST,
+                filename: IMAGE_FILENAME
+            })
+        }).promise();
+    }
+
     // Load up the chess board state
+    const responseTopic = 'state/' + event.devName + "/state";
     const player = (await doQuery(queries.getPlayer, "getPlayer", { id: playerName })).data.getPlayer;
+    
+    if(player.game == null) {
+        return iotdata.publish({
+            topic: responseTopic,
+            payload: JSON.stringify({
+                state: [
+                    // Treeees
+                    [BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, GREEN, BLUE],
+                    [BLUE, WHITE, GRAY, BLUE, BLUE, GREEN, LIGHTGREEN, LIGHTGREEN],                    
+                    [BLUE, BLUE, BLUE, BLUE, LIGHTGREEN, LIGHTGREEN, GREEN, GREEN],                    
+                    [BLUE, BLUE, BLUE, BLUE, GREEN, GREEN, LIGHTGREEN, LIGHTGREEN],                    
+                    [BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, GOLD, BLUE],
+                    [BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, GOLD, BLUE],
+                    [LIGHTGREEN, GREEN, LIGHTGREEN, GREEN, LIGHTGREEN, GREEN, ORANGE, GREEN],
+                    [GREEN, LIGHTGREEN, GREEN, LIGHTGREEN, GREEN, LIGHTGREEN, GREEN, LIGHTGREEN],
+                    // Default
+                    // [OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF],
+                    // [OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF],
+                    // [OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF],
+                    // [OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF],
+                    // [OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF],
+                    // [OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF],
+                    // [OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF],
+                    // [OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF],
+                ],
+                message: "\n\n   In\n    Lobby",
+                brightness: 255,
+                mirror: false
+            })
+        }).promise();
+    }
+    
     var game = Chess();
     game.load_pgn(player.game.pgn);
 
     // Generate the color state to send back
     var state = await DoMove(game, player, event.state);
-
+    
+    // Generate the latest game message
+    var message = "";
+    if(game.turn() == 'w') {
+        message += "->";
+    } else {
+        message += "  ";
+    }
+    if(player.game.whitePlayer) {
+        message += player.game.whitePlayer.id += "\n";
+    } else {
+        message += "computer\n"
+    }
+    
+    if(game.turn() == 'b') {
+        message += "->";
+    } else {
+        message += "  ";
+    }
+    if(player.game.blackPlayer) {
+        message += player.game.blackPlayer.id += "\n";
+    } else {
+        message += "computer\n"
+    }
+    message += "...\n";
+    //message += game.history(
+    //    { verbose: true }
+    //).slice(-4).map(item => item["from"] + " -> " + item["to"]).join("\n");
+    message += game.pgn({ max_width: 1 }).split("\n").slice(-4).join("\n");
+    
     if (game.game_over()) {
         state = GameOverColors(game);
     }
 
     // write the response back to the game client.
-    const responseTopic = 'state/' + event.devName;
     var params = {
         topic: responseTopic,
-        payload: JSON.stringify({ state: state, received: event.state }), // Simple echo at the moment
+        payload: JSON.stringify(
+            {
+                state: state,
+                message: message,
+            }
+        ), // Simple echo at the moment
         qos: 0,
     };
 

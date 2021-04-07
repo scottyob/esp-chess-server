@@ -109,19 +109,59 @@
       "AmplifyAppId": "d3rwxyk20q1igr"
     },
     "categories": {
-      "auth": {
-        "espchessserver40781978": {}
-      },
       "function": {
         "EspChessSetup": {
           "deploymentBucketName": "amplify-espchessserver-prod-54711-deployment",
-          "s3Key": "amplify-builds/EspChessSetup-76414267424879394e4a-build.zip"
+          "s3Key": "amplify-builds/EspChessSetup-746e63526246444b3568-build.zip"
+        },
+        "EspChessAddUser": {
+          "deploymentBucketName": "amplify-espchessserver-prod-54711-deployment",
+          "s3Key": "amplify-builds/EspChessAddUser-7644614839436d756a4b-build.zip"
+        },
+        "EspChessStartGame": {
+          "deploymentBucketName": "amplify-espchessserver-prod-54711-deployment",
+          "s3Key": "amplify-builds/EspChessStartGame-38585461435a64613038-build.zip"
+        },
+        "EspChessUpdateBoard": {
+          "deploymentBucketName": "amplify-espchessserver-prod-54711-deployment",
+          "s3Key": "amplify-builds/EspChessUpdateBoard-385930557741397a587a-build.zip"
+        },
+        "espchessserverc032ae7cPreSignup": {
+          "deploymentBucketName": "amplify-espchessserver-prod-54711-deployment",
+          "s3Key": "amplify-builds/espchessserverc032ae7cPreSignup-5a6232724933396b6278-build.zip"
+        },
+        "EspChessLeaveGame": {
+          "deploymentBucketName": "amplify-espchessserver-prod-54711-deployment",
+          "s3Key": "amplify-builds/EspChessLeaveGame-626f5977594153303272-build.zip"
+        },
+        "EspChessLayer": {
+          "deploymentBucketName": "amplify-espchessserver-prod-54711-deployment",
+          "s3Key": "amplify-builds/EspChessLayer-build.zip"
         }
       },
       "hosting": {
         "amplifyhosting": {
           "appId": "d3rwxyk20q1igr",
           "type": "manual"
+        }
+      },
+      "auth": {
+        "espchessserverc032ae7c": {}
+      }
+    },
+    "nonCFNdata": {
+      "function": {
+        "EspChessLayer": {
+          "layerVersionMap": {
+            "1": {
+              "permissions": [
+                {
+                  "type": "private"
+                }
+              ],
+              "hash": "h8wwvkm18ceMEV2U2OqHdm6nj40uwW4WoUaYr+JLl8A="
+            }
+          }
         }
       }
     }

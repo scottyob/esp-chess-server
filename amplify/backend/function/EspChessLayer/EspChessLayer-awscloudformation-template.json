@@ -55,14 +55,16 @@
       "DeletionPolicy": "Retain",
       "UpdateReplacePolicy": "Retain"
     },
-    "LambdaLayerPermissionpublic1": {
+    "LambdaLayerPermissionprivate1": {
       "Type": "AWS::Lambda::LayerVersionPermission",
       "Properties": {
         "Action": "lambda:GetLayerVersion",
         "LayerVersionArn": {
           "Ref": "LambdaLayer"
         },
-        "Principal": "*"
+        "Principal": {
+          "Ref": "AWS::AccountId"
+        }
       }
     }
   },
