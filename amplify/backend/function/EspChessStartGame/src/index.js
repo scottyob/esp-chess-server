@@ -57,6 +57,7 @@ async function doQuery(query, operationName, args) {
 
 exports.handler = async(event) => {
 	console.log("starting...");
+	console.log(event);
 	// Get the local player
 	const player = await doQuery(queries.getPlayer, "getPlayer", { id: event.identity.username });
 	console.log(JSON.stringify(player));
@@ -79,7 +80,7 @@ exports.handler = async(event) => {
 		if (opponent.data.getPlayer.game != null) {
 			throw "opponent already in game";
 		}
-		const opponentId = opponent.data.getPlayer.id;
+		opponentId = opponent.data.getPlayer.id;
 	}
 
 	// Create a new game of chess with fresh state

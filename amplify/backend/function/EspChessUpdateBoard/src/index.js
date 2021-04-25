@@ -204,7 +204,7 @@ function FindDeltaSquare(state, game, ignore) {
     return deltaSquare;
 }
 
-async function DoMove(game, player, state) {
+async function DoMove(game, player, state, remoteDev) {
     // Show differences in game state
     var deltaColors = FindDeltasColors(state, game);
     const deltas = FindDeltas(state, game);
@@ -219,10 +219,12 @@ async function DoMove(game, player, state) {
 
     //ToDo:  Update logic
     if (game.turn() != localPlayer) {
+        console.log("Not your turn!");
         return deltaColors;
     }
 
     if (player.holding == null) {
+        console.log("Player is NOT holding a piece");
         // Get the square difference
         var deltaSquare = null;
         var holding = player.holding;
@@ -288,10 +290,10 @@ async function DoMove(game, player, state) {
         console.log(player.game.whitePlayer);
 
         if (player.game.blackPlayer === null || player.game.whitePlayer === null) {
-            // TODO:  Remove me, moves for the other player.
+            // Moves for the other player. (AI)
             var moves = game.moves();
-            const move = moves[Math.floor(Math.random() * moves.length)]
-            game.move(move)
+            const move = moves[Math.floor(Math.random() * moves.length)];
+            game.move(move);
         }
 
         // Log the move
@@ -306,14 +308,30 @@ async function DoMove(game, player, state) {
         console.log(result);
 
         deltaColors = FindDeltasColors(state, game);
+        
+        if(remoteDev !== null) {
+            // write the response back to the game client.
+            var params = {
+                topic: remoteDev,
+                payload: JSON.stringify(
+                    {
+                        updateRequired: true
+                    }
+                ), // Simple echo at the moment
+                qos: 0,
+            };
+            console.log("Publishing opponent update request");
+            console.log(params);
+            iotdata.publish(params).promise();
+        }
         return deltaColors;
     }
 
 }
 
-const VERSION = "1.0"
+const VERSION = "1.02"
 const IMAGE_HOST = "scottyob-pub.s3-us-west-2.amazonaws.com"
-const IMAGE_FILENAME = "/espchess-1.0.bin"
+const IMAGE_FILENAME = "/espchess-1.02.bin"
 
 exports.handler = async(event, context) => {
     // Find the local players name
@@ -337,6 +355,8 @@ exports.handler = async(event, context) => {
     // Load up the chess board state
     const responseTopic = 'state/' + event.devName + "/state";
     const player = (await doQuery(queries.getPlayer, "getPlayer", { id: playerName })).data.getPlayer;
+    console.log("Player: ");
+    console.log(player);
     
     if(player.game == null) {
         return iotdata.publish({
@@ -344,14 +364,14 @@ exports.handler = async(event, context) => {
             payload: JSON.stringify({
                 state: [
                     // Treeees
-                    [BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, GREEN, BLUE],
-                    [BLUE, WHITE, GRAY, BLUE, BLUE, GREEN, LIGHTGREEN, LIGHTGREEN],                    
-                    [BLUE, BLUE, BLUE, BLUE, LIGHTGREEN, LIGHTGREEN, GREEN, GREEN],                    
-                    [BLUE, BLUE, BLUE, BLUE, GREEN, GREEN, LIGHTGREEN, LIGHTGREEN],                    
-                    [BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, GOLD, BLUE],
-                    [BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, GOLD, BLUE],
-                    [LIGHTGREEN, GREEN, LIGHTGREEN, GREEN, LIGHTGREEN, GREEN, ORANGE, GREEN],
-                    [GREEN, LIGHTGREEN, GREEN, LIGHTGREEN, GREEN, LIGHTGREEN, GREEN, LIGHTGREEN],
+                    // [BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, GREEN, BLUE],
+                    // [BLUE, WHITE, GRAY, BLUE, BLUE, GREEN, LIGHTGREEN, LIGHTGREEN],                    
+                    // [BLUE, BLUE, BLUE, BLUE, LIGHTGREEN, LIGHTGREEN, GREEN, GREEN],                    
+                    // [BLUE, BLUE, BLUE, BLUE, GREEN, GREEN, LIGHTGREEN, LIGHTGREEN],                    
+                    // [BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, GOLD, BLUE],
+                    // [BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, GOLD, BLUE],
+                    // [LIGHTGREEN, GREEN, LIGHTGREEN, GREEN, LIGHTGREEN, GREEN, ORANGE, GREEN],
+                    // [GREEN, LIGHTGREEN, GREEN, LIGHTGREEN, GREEN, LIGHTGREEN, GREEN, LIGHTGREEN],
                     // Default
                     // [OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF],
                     // [OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF],
@@ -361,6 +381,15 @@ exports.handler = async(event, context) => {
                     // [OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF],
                     // [OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF],
                     // [OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF],
+                    // Smile
+                    [OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF],
+                    [OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF],
+                    [OFF,OFF,BLUE,OFF,OFF,GREEN,OFF,OFF],
+                    [OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF],
+                    [OFF,OFF,OFF,BLUE,OFF,BLUE,OFF,OFF],
+                    [OFF,OFF,OFF,OFF,BLUE,OFF,OFF,OFF],
+                    [OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF],
+                    [OFF,OFF,OFF,OFF,OFF,OFF,OFF,OFF],
                 ],
                 message: "\n\n   In\n    Lobby",
                 brightness: 255,
@@ -372,9 +401,6 @@ exports.handler = async(event, context) => {
     var game = Chess();
     game.load_pgn(player.game.pgn);
 
-    // Generate the color state to send back
-    var state = await DoMove(game, player, event.state);
-    
     // Generate the latest game message
     var message = "";
     if(game.turn() == 'w') {
@@ -383,9 +409,9 @@ exports.handler = async(event, context) => {
         message += "  ";
     }
     if(player.game.whitePlayer) {
-        message += player.game.whitePlayer.id += "\n";
+        message += player.game.whitePlayer.id + "\n";
     } else {
-        message += "computer\n"
+        message += "computer\n";
     }
     
     if(game.turn() == 'b') {
@@ -394,11 +420,35 @@ exports.handler = async(event, context) => {
         message += "  ";
     }
     if(player.game.blackPlayer) {
-        message += player.game.blackPlayer.id += "\n";
+        message += player.game.blackPlayer.id + "\n";
     } else {
-        message += "computer\n"
+        message += "computer\n";
     }
     message += "...\n";
+
+    // Little hack to find the opponents device name.
+    var opponentDev = null;
+    if(player.game.whitePlayer && player.game.whitePlayer.id != player.id) {
+        opponentDev = 'state/' + event.devName.replace(player.id, player.game.whitePlayer.id) + "/state";
+    }
+    else if(player.game.blackPlayer && player.game.blackPlayer.id != player.id) {
+        opponentDev = 'state/' + event.devName.replace(player.id, player.game.blackPlayer.id) + "/state";
+    }
+    if(opponentDev) {
+        console.log("Opponent player found");
+        console.log(opponentDev);
+    }
+    
+    console.log("DEBUG");
+    console.log(game);
+    console.log(player);
+    console.log(event.state);
+    console.log(opponentDev);
+    
+    // Generate the color state to send back
+    var state = await DoMove(game, player, event.state, opponentDev);
+
+
     //message += game.history(
     //    { verbose: true }
     //).slice(-4).map(item => item["from"] + " -> " + item["to"]).join("\n");
